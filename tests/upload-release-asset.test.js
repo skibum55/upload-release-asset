@@ -98,17 +98,11 @@ describe('Upload Release Asset', () => {
   });
 
   test('zero file size fail', async () => {
-
     content = Buffer.from('');
     fs.readFileSync = jest.fn().mockReturnValueOnce(content);
-    core.getInput = jest
-      .fn()
-      .mockReturnValueOnce('contentLength');
-
+    core.getInput = jest.fn().mockReturnValueOnce('contentLength');
     core.setOutput = jest.fn();
-
     await run();
-
     expect(core.setOutput).toBe(0);
   });
 
