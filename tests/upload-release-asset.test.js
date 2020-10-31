@@ -97,21 +97,45 @@ describe('Upload Release Asset', () => {
     expect(core.setOutput).toHaveBeenCalledTimes(0);
   });
 
-  test('zero file size fail', async () => {
-    core.getInput = jest
-      .fn()
-      .mockReturnValueOnce('upload_url')
-      .mockReturnValueOnce('asset_path')
-      .mockReturnValueOnce('asset_name')
-      .mockReturnValueOnce('asset_content_type');
+  // test('zero file size fail', async () => {
+  //
+  //   content = Buffer.from('');
+  //   fs.readFileSync = jest.fn().mockReturnValueOnce(content);
+  //   core.getInput = jest
+  //     .fn()
+  //     .mockReturnValueOnce('upload_url')
+  //     .mockReturnValueOnce('asset_path')
+  //     .mockReturnValueOnce('asset_name')
+  //     .mockReturnValueOnce('asset_content_type');
+  //
+  //   await run();
+  //
+  //   expect(uploadReleaseAsset).toHaveBeenCalledWith({
+  //     url: 'upload_url',
+  //     headers: { 'content-type': 'asset_content_type', 'content-length': 0 },
+  //     name: 'asset_name',
+  //     file: content
+  //   });
+  // });
 
-    await run();
+  // test('empty file error', () => {
+  //   function drinkOctopus() {
+  //     contentLength('');
+  //   }
+  //
+  //   // Test that the error message says "yuck" somewhere: these are equivalent
+  //   expect(drinkOctopus).toThrowError(/yuck/);
+  //   expect(drinkOctopus).toThrowError('yuck');
+  //
+  //   // Test the exact error message
+  //   expect(drinkOctopus).toThrowError(/^yuck, octopus flavor$/);
+  //   expect(drinkOctopus).toThrowError(new Error('yuck, octopus flavor'));
+  //
+  //   // Test that we get a DisgustingFlavorError
+  //   expect(drinkOctopus).toThrowError(DisgustingFlavorError);
+  // });
 
-    expect(uploadReleaseAsset).toHaveBeenCalledWith({
-      url: 'upload_url',
-      headers: { 'content-type': 'asset_content_type', 'content-length': 0 },
-      name: 'asset_name',
-      file: content
-    });
+  test('has no content', () => {
+    expect(contentLength('')).toBe(0);
   });
 });
