@@ -136,6 +136,9 @@ describe('Upload Release Asset', () => {
   // });
 
   test('has no content', () => {
-    expect(contentLength('')).toBe(0);
+      function drinkOctopus() {
+        contentLength('');
+      }
+    expect(drinkOctopus).toBe(0);
   });
 });
