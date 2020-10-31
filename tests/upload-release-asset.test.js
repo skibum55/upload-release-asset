@@ -97,26 +97,20 @@ describe('Upload Release Asset', () => {
     expect(core.setOutput).toHaveBeenCalledTimes(0);
   });
 
-  // test('zero file size fail', async () => {
-  //
-  //   content = Buffer.from('');
-  //   fs.readFileSync = jest.fn().mockReturnValueOnce(content);
-  //   core.getInput = jest
-  //     .fn()
-  //     .mockReturnValueOnce('upload_url')
-  //     .mockReturnValueOnce('asset_path')
-  //     .mockReturnValueOnce('asset_name')
-  //     .mockReturnValueOnce('asset_content_type');
-  //
-  //   await run();
-  //
-  //   expect(uploadReleaseAsset).toHaveBeenCalledWith({
-  //     url: 'upload_url',
-  //     headers: { 'content-type': 'asset_content_type', 'content-length': 0 },
-  //     name: 'asset_name',
-  //     file: content
-  //   });
-  // });
+  test('zero file size fail', async () => {
+
+    content = Buffer.from('');
+    fs.readFileSync = jest.fn().mockReturnValueOnce(content);
+    core.getInput = jest
+      .fn()
+      .mockReturnValueOnce('contentLength');
+
+    core.setOutput = jest.fn();
+
+    await run();
+
+    expect(core.setOutput).toBe(0);
+  });
 
   // test('empty file error', () => {
   //   function drinkOctopus() {
@@ -135,10 +129,10 @@ describe('Upload Release Asset', () => {
   //   expect(drinkOctopus).toThrowError(DisgustingFlavorError);
   // });
 
-  test('has no content', () => {
-      function drinkOctopus() {
-        contentLength('');
-      }
-    expect(drinkOctopus).toBe(0);
-  });
+  // test('has no content', () => {
+  //     function drinkOctopus() {
+  //       contentLength('');
+  //     }
+  //   expect(drinkOctopus).toBe(0);
+  // });
 });
