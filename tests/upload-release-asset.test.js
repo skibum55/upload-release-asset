@@ -96,4 +96,37 @@ describe('Upload Release Asset', () => {
     expect(core.setFailed).toHaveBeenCalledWith('Error uploading release asset');
     expect(core.setOutput).toHaveBeenCalledTimes(0);
   });
+
+  test('zero file size fail', async () => {
+    content = Buffer.from('');
+    fs.readFileSync = jest.fn().mockReturnValueOnce(content);
+    core.getInput = jest.fn().mockReturnValueOnce('contentLength');
+    core.setOutput = jest.fn();
+    await run();
+    expect(core.setOutput).toBe(0);
+  });
+
+  // test('empty file error', () => {
+  //   function drinkOctopus() {
+  //     contentLength('');
+  //   }
+  //
+  //   // Test that the error message says "yuck" somewhere: these are equivalent
+  //   expect(drinkOctopus).toThrowError(/yuck/);
+  //   expect(drinkOctopus).toThrowError('yuck');
+  //
+  //   // Test the exact error message
+  //   expect(drinkOctopus).toThrowError(/^yuck, octopus flavor$/);
+  //   expect(drinkOctopus).toThrowError(new Error('yuck, octopus flavor'));
+  //
+  //   // Test that we get a DisgustingFlavorError
+  //   expect(drinkOctopus).toThrowError(DisgustingFlavorError);
+  // });
+
+  // test('has no content', () => {
+  //     function drinkOctopus() {
+  //       contentLength('');
+  //     }
+  //   expect(drinkOctopus).toBe(0);
+  // });
 });
